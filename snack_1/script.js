@@ -22,7 +22,6 @@ function getPost(id) {
   const promessa = new Promise((resolve, reject) => {
     fetch(`https://dummyjson.com/posts/${id}`)
       .then((response) => response.json())
-      .then((post) => post)
       .then((post) =>
         fetch(`https://dummyjson.com/users/${post.userId}`)
           .then((response) => response.json())
@@ -30,6 +29,7 @@ function getPost(id) {
             post.user = user;
             resolve(post);
           })
+          .catch(reject)
       )
       .catch(reject);
   });

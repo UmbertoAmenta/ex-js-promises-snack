@@ -40,6 +40,7 @@ function creaLanciaDado() {
           ultimoRisultato = risultatoLancio;
           resolve(`Il dado si è fermato sul numero ${risultatoLancio}`);
         } else {
+          ultimoRisultato = null;
           reject(
             "Il dado non ha rotolato a sufficienza, il tiro non può essere considerato valido"
           );
@@ -52,11 +53,12 @@ function creaLanciaDado() {
 const dadoMagico = creaLanciaDado();
 
 dadoMagico()
-  .then((success) => console.log(success))
-  .catch((error) => console.log(error))
-  .finally(console.log("Lancio in corso..."));
-
-dadoMagico()
-  .then((success) => console.log(success))
+  .then((success) => {
+    console.log(success);
+    dadoMagico()
+      .then((success) => console.log(success))
+      .catch((error) => console.log(error))
+      .finally(console.log("Lancio in corso..."));
+  })
   .catch((error) => console.log(error))
   .finally(console.log("Lancio in corso..."));
